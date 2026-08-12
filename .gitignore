@@ -1,0 +1,5 @@
+.env
+__pycache__/
+downloads/
+# 知識の中身はローカル専用 (公開リポジトリには仕組みのみを置く。D9)
+knowledge/
