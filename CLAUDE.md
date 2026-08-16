@@ -12,6 +12,7 @@
 | Neo4j 起動 | `docker compose up -d` |
 | 同期 (bundle → Neo4j) | `uv run scripts/kb_sync.py` |
 | 健全性検査 | `uv run scripts/kb_check.py` |
+| グラフ可視化 (HTML 生成) | `uv run scripts/kb_viz.py` → `kb_graph.html` をブラウザで開く |
 | Cypher 実行 | `docker exec kb-neo4j cypher-shell -u neo4j -p <NEO4J_PASSWORD> --format plain "<query>"` |
 | EDINET 検索/取得 | `uv run scripts/edinet.py search 7203 --days 30` / `... get <docID> --type pdf` |
 

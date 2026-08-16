@@ -92,6 +92,7 @@ Neo4j (Docker, bolt://localhost:7687)  ← 派生インデックス。使い捨�
 | `compose.yml` + `.env` | Neo4j (container 名 `kb-neo4j`, ports 7474/7687, named volume で永続化) |
 | `scripts/kb_sync.py` | bundle → Neo4j 全再構築。deps: neo4j, pyyaml |
 | `scripts/kb_check.py` | 健全性検査 (OKF 準拠性 / リンク切れ / staleness)。deps: pyyaml のみ (kb_sync と数関数重複させている: uv の script 単位環境分離のため import 共有しない) |
+| `scripts/kb_viz.py` | bundle → 自己完結インタラクティブ HTML グラフ (`kb_graph.html`、gitignore)。Neo4j 不要・ブラウザで開くだけの派生ビュー (D1 と同じ位置づけで使い捨て可)。force-directed グラフ + 一覧テーブル、type 別配色・検索・タグ/リンク/sources の詳細パネル、stale/未執筆 (gap) の可視化。deps: pyyaml のみ (kb_sync と数関数重複、kb_check と同じ理由) |
 | `scripts/kb_memory_nudge.py` | D8 の PostToolUse hook 本体。`~/.claude/settings.json` の hooks から呼ばれる (memory ディレクトリへの Write/Edit を検知、MEMORY.md は除外)。判断基準はグローバル CLAUDE.md §6 |
 | `scripts/edinet.py` | EDINET API v2 クライアント (list / search / get)。キーは `.env` の `EDINET_API_KEY`。書類は `downloads/edinet/` (gitignore) へ。deps: requests |
 | `D:\quant-mind` (外部) | QuantMind の checkout。arXiv 論文・米国ニュースの知識精錬に使う agent-native ワークベンチ (`cd D:\quant-mind && claude` で開く)。精錬結果は本 bundle に OKF 概念として保存する — bundle が常に source of truth |
