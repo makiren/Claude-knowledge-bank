@@ -19,7 +19,7 @@
     │ /kb-search   index 探索 + Grep + Cypher で想起する
     │ /kb-maintain 検査・同期・Neo4j 起動
     ▼
-knowledge/                     ← source of truth (OKF v0.2 bundle, ローカル専用・git 追跡外)
+knowledge/                     ← source of truth (OKF v0.2 bundle, 独立 private repo で 2 拠点同期)
     │ scripts/kb_sync.py       ← 全再構築・冪等
     ▼
 Neo4j (Docker, bolt://localhost:7687)  ← 派生インデックス。使い捨て可
@@ -37,7 +37,8 @@ Neo4j (Docker, bolt://localhost:7687)  ← 派生インデックス。使い捨�
 | D6 | リンク切れは「未執筆の知識」としてグラフに `missing: true` ノードで残す | OKF 仕様がリンク切れを not-yet-written knowledge として許容。知識ギャップの可視化に転用する |
 | D7 | Neo4j は Docker Compose (`neo4j:5.26-community`)、認証情報は `.env` (gitignore) | 再現性。5.26 は LTS |
 | D8 | auto-memory 書き込みを trigger に kb-save を nudge する hook (2026-08-13 追加、ユーザー承認済) | memory を書く瞬間 = 知見の永続化を判断している瞬間。PostToolUse hook がリマインダーを注入し、保存判断自体は Claude が行うので KB は汚れない。D4 のフルループとは別の、ピンポイント自動化 |
-| D9 | リポジトリは仕組みのみ公開 (GitHub public)、`knowledge/` は gitignore でローカル専用 (2026-08-13、ユーザー指示) | 個人の分析・投資仮説を外に出さない。知識の更新履歴は git でなく bundle 内の log.md が担う (OKF の規約通り)。公開履歴に知識が残らないよう初回コミットは作り直した |
+| D9 | リポジトリは仕組みのみ公開 (GitHub public)、`knowledge/` は gitignore でローカル専用 (2026-08-13、ユーザー指示。置き場所は D10 で改訂 — 公開リポジトリに知識を置かない原則は不変) | 個人の分析・投資仮説を外に出さない。知識の更新履歴は git でなく bundle 内の log.md が担う (OKF の規約通り)。公開履歴に知識が残らないよう初回コミットは作り直した |
+| D10 | `knowledge/` を独立した **private repo** ([Claude-knowledge-bundle](https://github.com/makiren/Claude-knowledge-bundle)) としてネストし、GitHub 経由でデスクトップ (Windows) / Macbook の 2 拠点を同期する (2026-08-17、ユーザー承認済) | 知識の正が markdown (D1) なので同期は git 問題に還元でき、Neo4j と kb_graph.html は各マシンで `kb_sync.py` / `kb_viz.py` により再構築すればよい (使い捨て派生の帰結)。親リポジトリは `knowledge/` を ignore 済みなのでネストは無干渉。**bundle repo はテキストのみ** — PDF 等のバイナリは `sources` の URL 参照か `downloads/` (ローカル) に置く。容量 (現状 64KB、GitHub 推奨上限 1GB) と機密の両面でこの規約を維持する。知識レベルの更新履歴は引き続き log.md が正、git 履歴は同期・競合解決・復元用 |
 
 ## 4. OKF bundle 規約
 
@@ -88,7 +89,7 @@ Neo4j (Docker, bolt://localhost:7687)  ← 派生インデックス。使い捨�
 
 | パス | 役割 |
 |---|---|
-| `knowledge/` | OKF bundle (source of truth) |
+| `knowledge/` | OKF bundle (source of truth)。独立 private repo としてネスト (D10)、2 拠点同期。運用手順は docs/SETUP-MACOS.md |
 | `compose.yml` + `.env` | Neo4j (container 名 `kb-neo4j`, ports 7474/7687, named volume で永続化) |
 | `scripts/kb_sync.py` | bundle → Neo4j 全再構築。deps: neo4j, pyyaml |
 | `scripts/kb_check.py` | 健全性検査 (OKF 準拠性 / リンク切れ / staleness)。deps: pyyaml のみ (kb_sync と数関数重複させている: uv の script 単位環境分離のため import 共有しない) |
