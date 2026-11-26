@@ -10,6 +10,15 @@ bundle root: `D:\Claude-knowledge-bank\knowledge\` (OKF v0.2 準拠)
 この文書のパスは Windows (デスクトップ) のものである。Macbook では bundle root が `~/Claude-knowledge-bank/knowledge/` になる。
 `D:\Claude-knowledge-bank` は `~/Claude-knowledge-bank` に、パス区切りの `\` は `/` に読み替える。
 
+## 検索の前に (最新化)
+
+`git -C D:\Claude-knowledge-bank\knowledge pull --ff-only` で bundle を最新にしてから検索する。
+もう一方の拠点で保存された知見を取り込むためである。
+
+- pull で変更が入り、グラフ検索 (検索手順 3) を使う場合は、先に `uv run D:\Claude-knowledge-bank\scripts\kb_sync.py` で Neo4j を作り直す。
+- pull できない場合 (ネットワークに繋がらない、手元の未コミットの変更や未 push のコミットがリモートの変更とぶつかる、など) は、
+  手元の内容で検索を続け、最新でない可能性があることを報告に添える。検索のためにコミットやマージはしない。
+
 ## 検索手順 (安い順)
 
 1. **Progressive disclosure**: `knowledge\index.md` → 関連エリアの index.md → 概念ファイル → 本文リンクを辿る。

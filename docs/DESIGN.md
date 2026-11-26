@@ -39,6 +39,7 @@ Neo4j (Docker, bolt://localhost:7687)  ← 派生インデックス。使い捨�
 | D8 | auto-memory 書き込みを trigger に kb-save を nudge する hook (2026-08-13 追加、ユーザー承認済) | memory を書く瞬間 = 知見の永続化を判断している瞬間。PostToolUse hook がリマインダーを注入し、保存判断自体は Claude が行うので KB は汚れない。D4 のフルループとは別の、ピンポイント自動化 |
 | D9 | リポジトリは仕組みのみ公開 (GitHub public)、`knowledge/` は gitignore でローカル専用 (2026-08-13、ユーザー指示。置き場所は D10 で改訂 — 公開リポジトリに知識を置かない原則は不変) | 個人の分析・投資仮説を外に出さない。知識の更新履歴は git でなく bundle 内の log.md が担う (OKF の規約通り)。公開履歴に知識が残らないよう初回コミットは作り直した |
 | D10 | `knowledge/` を独立した **private repo** ([Claude-knowledge-bundle](https://github.com/makiren/Claude-knowledge-bundle)) としてネストし、GitHub 経由でデスクトップ (Windows) / Macbook の 2 拠点を同期する (2026-08-17、ユーザー承認済) | 知識の正が markdown (D1) なので同期は git 問題に還元でき、Neo4j と kb_graph.html は各マシンで `kb_sync.py` / `kb_viz.py` により再構築すればよい (使い捨て派生の帰結)。親リポジトリは `knowledge/` を ignore 済みなのでネストは無干渉。**bundle repo はテキストのみ** — PDF 等のバイナリは `sources` の URL 参照か `downloads/` (ローカル) に置く。容量 (現状 64KB、GitHub 推奨上限 1GB) と機密の両面でこの規約を維持する。知識レベルの更新履歴は引き続き log.md が正、git 履歴は同期・競合解決・復元用 |
+| D11 | `/kb-save` と `/kb-search` は、開始時に `git -C knowledge pull` で bundle を最新にする。`/kb-save` は終了時に knowledge 側で commit & push する (2026-11-26、ユーザー指示) | D10 の同期手順は CLAUDE.md と SETUP-MACOS.md にだけ書いてあり、スキルの手順には無かった。スキルは他のプロジェクトのセッションからも呼ばれるので、これらの文書が読まれないまま保存されることがある。2026-11-26 には、2026-10-08 の保存分が未コミットで残り、リモートが 15 コミット先行していた。スキルの手順に入れておけば、どのセッションから呼んでも同期の手順が読まれる。pull できないときも検索と保存は止めず、最新でない状態から始めたことを報告する |
 
 ## 4. OKF bundle 規約
 

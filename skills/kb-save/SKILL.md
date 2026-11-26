@@ -15,9 +15,14 @@ bundle root: `D:\Claude-knowledge-bank\knowledge\` (OKF v0.2 準拠)
 
 ## 手順
 
-1. **重複確認 (必須)**: `knowledge\index.md` → 該当エリアの index.md を読み、Grep で本文・tags も検索する。
+1. **最新化 (必須)**: `git -C D:\Claude-knowledge-bank\knowledge pull --no-rebase` で bundle を最新にしてから始める。
+   もう一方の拠点で保存された知見を取り込み、重複確認を最新の内容で行うためである。
+   - 前のセッションの未コミットの変更が残っていて pull が止まる場合は、内容を確かめてその分だけ先にコミットし、もう一度 pull する。
+   - 競合したら両方の行を残す (`log.md` は新しい日付を上に、各 `index.md` は行を足す)。
+   - ネットワークに繋がらないなどで pull できない場合は、そのまま保存を続け、最新でない状態から始めたことを報告する。
+2. **重複確認 (必須)**: `knowledge\index.md` → 該当エリアの index.md を読み、Grep で本文・tags も検索する。
    既存概念が同じ主題を扱っていれば、新規作成せず**その概念を更新**して `generated.at` を今の時刻にする。
-2. **置き場所と type を決める**:
+3. **置き場所と type を決める**:
 
    | ディレクトリ | type | 内容 |
    |---|---|---|
@@ -30,7 +35,7 @@ bundle root: `D:\Claude-knowledge-bank\knowledge\` (OKF v0.2 準拠)
    | analyses/ | Analysis / Thesis / Earnings / Factor | 比較分析・投資仮説・決算メモ・ファクター知見 |
 
    どれにも合わなければ新しい type 値を使ってよい (OKF は type を固定しない)。
-3. **概念ファイルを書く**: ファイル名は kebab-case。時刻は `Get-Date -Format o` で取得する。
+4. **概念ファイルを書く**: ファイル名は kebab-case。時刻は `Get-Date -Format o` で取得する。
 
    ```markdown
    ---
@@ -53,13 +58,17 @@ bundle root: `D:\Claude-knowledge-bank\knowledge\` (OKF v0.2 準拠)
    `generated.by` の接頭辞には、実行しているハーネスの名前を書く。Claude Code は `claude-code/<model id>`、
    OpenCode は `opencode/<model id>` とする。
 
-4. **リンクを張る**: 関連する既存概念へ bundle 相対リンク (`[title](/decisions/xxx.md)` 形式) を本文に入れる。
+5. **リンクを張る**: 関連する既存概念へ bundle 相対リンク (`[title](/decisions/xxx.md)` 形式) を本文に入れる。
    未執筆だが関連するはずの概念へのリンクも許容される (知識ギャップとしてグラフに現れる)。
-5. **index.md 更新**: 置いたディレクトリの index.md に `* [title](file.md) - description` を追加。
-6. **log.md 更新**: bundle root の `log.md` の今日の日付セクション (無ければ新設、新しい日付が上) に
+6. **index.md 更新**: 置いたディレクトリの index.md に `* [title](file.md) - description` を追加。
+7. **log.md 更新**: bundle root の `log.md` の今日の日付セクション (無ければ新設、新しい日付が上) に
    `* **Creation**: ...` / `* **Update**: ...` を追記。
-7. **同期**: `uv run D:\Claude-knowledge-bank\scripts\kb_sync.py`
-   Neo4j 未起動で失敗しても保存自体は完了している。「後で /kb-maintain で同期」と伝えて続行してよい。
+8. **同期**: `uv run D:\Claude-knowledge-bank\scripts\kb_sync.py`
+   Neo4j 未起動で失敗しても、概念ファイルの保存はできている。「後で /kb-maintain で同期」と伝えて手順 9 に進む。
+9. **commit & push (必須)**: knowledge 側 (親リポジトリとは別の repo) で、今回追加・更新した概念ファイルと `index.md`・`log.md` を
+   コミットして push する。コミットメッセージには、何を追加・更新したかを一文で書く。手順 8 の同期に失敗していても行う。
+   push が拒否されたら、手順 1 と同じように pull してからもう一度 push する。
+   push できなかった場合は、未 push のコミットが残っていることを報告する。
 
 ## 固有知識と汎用知識の切り分け (重要)
 

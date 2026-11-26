@@ -53,6 +53,9 @@ done
 2. **知識を更新したら**: knowledge/ 側で commit & push (親リポジトリとは別の repo であることに注意)
 3. 仕組み (scripts/skills) を変えたときだけ親リポジトリも commit & push
 
+1 と 2 は `/kb-save` の手順に、1 は `/kb-search` の手順にも入っている (DESIGN.md D11)。
+スキルを使わずに `knowledge/` を直接触るときは、手で行う。
+
 競合したら普通の git マージで解決する。`log.md` と各 `index.md` は両拠点で同日に触ると
 衝突しやすいが、いずれも行追加が主なので union 的に両方残せばよい。
 
