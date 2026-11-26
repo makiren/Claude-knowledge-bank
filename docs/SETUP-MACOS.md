@@ -12,7 +12,12 @@
 
 ## 初回セットアップ
 
-前提: git / gh / uv / Docker (OrbStack 推奨) / Claude Code をインストール済み。
+前提: git / gh / uv / Docker 互換のコンテナランタイム / Claude Code をインストール済み。
+
+コンテナランタイムについて、当初この欄には「OrbStack 推奨」と書いていたが、この Macbook では OrbStack を使っていない。
+実際には Docker Desktop で運用し、2026-11-26 に Kiri へ移行した (docker context は `kiri`)。
+以下の `docker compose up -d` などのコマンドは、Kiri でもそのまま使える。
+移行の経緯と運用ルールは `knowledge/decisions/local-container-runtime-kiri.md` に書いてある。
 
 ```sh
 # 1. 仕組み (public) と知識 (private) を clone — knowledge/ は親が gitignore 済みなのでネストして良い

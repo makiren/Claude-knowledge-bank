@@ -7,6 +7,12 @@ description: knowledge bank (D:\Claude-knowledge-bank) のメンテナンス。N
 
 作業ディレクトリ: `D:\Claude-knowledge-bank`
 
+この文書のパスとコマンドは Windows (デスクトップ) のものである。Macbook では次のように読み替える。
+
+- 作業ディレクトリは `~/Claude-knowledge-bank`。
+- コンテナランタイムは Docker Desktop ではなく Kiri (2026-11-26 に移行)。`docker` が応答しないときは、
+  手順 1 の `Start-Process` の代わりに、Kiri が起動しているかを確かめる (ログは `~/.kiri/daemon.log`)。
+
 ## 手順
 
 1. **Neo4j 起動確認**: `docker exec kb-neo4j cypher-shell -u neo4j -p <pw> "RETURN 1"` が通るか。

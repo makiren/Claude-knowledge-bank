@@ -7,6 +7,9 @@ description: 個人 knowledge bank (D:\Claude-knowledge-bank) から過去の知
 
 bundle root: `D:\Claude-knowledge-bank\knowledge\` (OKF v0.2 準拠)
 
+この文書のパスは Windows (デスクトップ) のものである。Macbook では bundle root が `~/Claude-knowledge-bank/knowledge/` になる。
+`D:\Claude-knowledge-bank` は `~/Claude-knowledge-bank` に、パス区切りの `\` は `/` に読み替える。
+
 ## 検索手順 (安い順)
 
 1. **Progressive disclosure**: `knowledge\index.md` → 関連エリアの index.md → 概念ファイル → 本文リンクを辿る。

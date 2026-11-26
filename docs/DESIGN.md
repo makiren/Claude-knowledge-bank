@@ -68,7 +68,8 @@ Neo4j (Docker, bolt://localhost:7687)  ← 派生インデックス。使い捨�
   開発フロー・手法・パターンは `patterns/` `decisions/` `troubleshooting/` に置く。判定基準は
   「別プロジェクトでそのまま役立つか」。両性質を持つ知見は分割して相互リンクする。
   プロジェクト固有の設計の正は各リポジトリの docs/DESIGN.md であり、KB 側は要約ポインタに留める
-- actor 規約 (OKF §7): Claude Code は `claude-code/<model-id>`、ユーザーは `human:makishima`
+- actor 規約 (OKF §7): Claude Code は `claude-code/<model-id>`、ユーザーは `human:makishima`。
+  OpenCode は `opencode/<model-id>` (2026-11-26 追加。OpenCode のセッションで保存した概念に合わせた事後記録)
 - 時刻は ISO 8601 (+09:00)。日付のみのフィールド (`stale_after` 等) は `YYYY-MM-DD`
 - 概念の追加・更新時は該当ディレクトリの `index.md` と root の `log.md` を必ず同時更新
 

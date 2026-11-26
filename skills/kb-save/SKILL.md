@@ -7,6 +7,12 @@ description: 開発・投資で得た知見を個人 knowledge bank (D:\Claude-k
 
 bundle root: `D:\Claude-knowledge-bank\knowledge\` (OKF v0.2 準拠)
 
+この文書のパスとコマンドは Windows (デスクトップ) のものである。Macbook では次のように読み替える。
+
+- bundle root は `~/Claude-knowledge-bank/knowledge/`。`D:\Claude-knowledge-bank` は `~/Claude-knowledge-bank` に、パス区切りの `\` は `/` に読み替える。
+- 時刻は `Get-Date -Format o` の代わりに
+  `python3 -c "import datetime; print(datetime.datetime.now().astimezone().isoformat(timespec='seconds'))"` で取得する。
+
 ## 手順
 
 1. **重複確認 (必須)**: `knowledge\index.md` → 該当エリアの index.md を読み、Grep で本文・tags も検索する。
@@ -43,6 +49,9 @@ bundle root: `D:\Claude-knowledge-bank\knowledge\` (OKF v0.2 準拠)
 
    # <本文。見出し・表・コードフェンスで構造化。生ログではなく圧縮した知見を書く>
    ```
+
+   `generated.by` の接頭辞には、実行しているハーネスの名前を書く。Claude Code は `claude-code/<model id>`、
+   OpenCode は `opencode/<model id>` とする。
 
 4. **リンクを張る**: 関連する既存概念へ bundle 相対リンク (`[title](/decisions/xxx.md)` 形式) を本文に入れる。
    未執筆だが関連するはずの概念へのリンクも許容される (知識ギャップとしてグラフに現れる)。
